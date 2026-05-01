@@ -13,12 +13,13 @@
 
   tasks:
     - name: Check AWS identity from control node
-      ansible.builtin.command: aws sts get-caller-identity --output json
+      ansible.builtin.shell: aws sts get-caller-identity --output json 2>/dev/null || true
       delegate_to: localhost
       run_once: true
       register: aws_identity_cmd
       changed_when: false
-      failed_when: false
+      args:
+        executable: /bin/bash
 
     - name: Refresh apt cache on Debian/Ubuntu
       ansible.builtin.apt:
@@ -49,17 +50,17 @@
       run_once: true
       register: ssm_parameter_cmd
       changed_when: false
-      when: aws_identity_cmd.rc == 0
+      when: aws_identity_cmd.stdout | length > 0
 
     - name: Skip SSM read when AWS credentials are unavailable
       ansible.builtin.debug:
         msg: "Skipping SSM fetch because AWS credentials are not configured in the Ansible runtime."
-      when: aws_identity_cmd.rc != 0
+      when: aws_identity_cmd.stdout | length == 0
 
     - name: Show SSM parameter command output
       ansible.builtin.debug:
         var: ssm_parameter_cmd.stdout
-      when: aws_identity_cmd.rc == 0
+      when: aws_identity_cmd.stdout | length > 0
 
     - name: Show Java version output
       ansible.builtin.debug:
