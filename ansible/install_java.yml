@@ -16,7 +16,7 @@
     - name: Check AWS identity from target host
       ansible.builtin.command: aws sts get-caller-identity --output json
       register: aws_identity_cmd
-      elegate_to: localhost
+      delegate_to: localhost
       changed_when: false
       failed_when: aws_identity_cmd.rc != 0
 
