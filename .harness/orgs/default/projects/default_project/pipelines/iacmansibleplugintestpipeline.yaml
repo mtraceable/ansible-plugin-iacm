@@ -11,7 +11,6 @@ pipeline:
         description: ""
         type: IACM
         spec:
-          workspace: ansiblepluginiacmtest
           execution:
             steps:
               - step:
@@ -52,6 +51,10 @@ pipeline:
                   add: []
               os: Linux
               hostNames: []
+          playbooks:
+            - iacmansibletestplaybook
+          inventories:
+            - iacmansibletestinventory
         tags: {}
   delegateSelectors:
     - kubernetes-delegate
