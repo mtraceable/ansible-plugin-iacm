@@ -50,6 +50,8 @@ pipeline:
                     image: plugins/aws-oidc
                     settings:
                       iamRoleArn: arn:aws:iam::282764120287:role/harness-oidc-role
+                      role_session_name: foo
+                      duration: 3600
           playbooks:
             - iacmansibletestplaybook
           inventories:
