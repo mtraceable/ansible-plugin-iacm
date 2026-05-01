@@ -39,19 +39,10 @@ pipeline:
                   playbooks:
                     - iacmansibletestplaybook
                   inventories:
-                    - iacmansibletestinventorystatic
+                    - iacmansibletestinventory
                   timeout: 1h
-              - step:
-                  type: Run
-                  name: Run_2
-                  identifier: Run_2
-                  spec:
-                    connectorRef: account.dockerconnector
-                    image: ubuntu:latest
-                    shell: Bash
-                    command: ls -al ./inventory.yaml
           playbooks:
             - iacmansibletestplaybook
           inventories:
-            - iacmansibletestinventorystatic
+            - iacmansibletestinventory
         tags: {}
