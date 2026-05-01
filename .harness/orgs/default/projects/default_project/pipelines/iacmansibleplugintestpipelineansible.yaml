@@ -69,6 +69,7 @@ pipeline:
                       AWS_ACCESS_KEY_ID: <+steps.Plugin_1.output.outputVariables.AWS_ACCESS_KEY_ID>
                       AWS_SECRET_ACCESS_KEY: <+steps.Plugin_1.output.outputVariables.AWS_SECRET_ACCESS_KEY>
                       AWS_SESSION_TOKEN: <+steps.Plugin_1.output.outputVariables.AWS_SESSION_TOKEN>
+                      SUPPORT_DEBUG: "true"
           playbooks:
             - iacmansibletestplaybook
           inventories:
