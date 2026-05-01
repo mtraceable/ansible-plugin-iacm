@@ -39,10 +39,10 @@ pipeline:
                   playbooks:
                     - iacmansibletestplaybook
                   inventories:
-                    - iacmansibletestinventory
+                    - iacmansibletestinventorystatic
                   timeout: 1h
           playbooks:
             - iacmansibletestplaybook
           inventories:
-            - iacmansibletestinventory
+            - iacmansibletestinventorystatic
         tags: {}
