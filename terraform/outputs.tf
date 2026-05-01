@@ -8,11 +8,6 @@ output "public_subnet_id" {
   value       = aws_subnet.public.id
 }
 
-output "instance_profile_name" {
-  description = "IAM instance profile attached to demo VMs for SSM reads."
-  value       = aws_iam_instance_profile.ec2_ssm_reader.name
-}
-
 output "vm_public_ips" {
   description = "Public IPs for the two demo VMs."
   value       = [for vm in aws_instance.vm : vm.public_ip]

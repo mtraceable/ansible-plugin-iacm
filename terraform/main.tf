@@ -29,51 +29,6 @@ locals {
   }
 }
 
-resource "aws_iam_role" "ec2_ssm_reader" {
-  name = "ansible-demo-ec2-ssm-reader"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      }
-    ]
-  })
-
-  tags = merge(local.common_tags, { Name = "ansible-demo-ec2-ssm-reader" })
-}
-
-resource "aws_iam_role_policy" "ec2_ssm_reader" {
-  name = "ansible-demo-ec2-ssm-reader-policy"
-  role = aws_iam_role.ec2_ssm_reader.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "ssm:GetParameter",
-          "ssm:GetParameters"
-        ]
-        Effect   = "Allow"
-        Resource = "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.ssm_parameter_name}"
-      }
-    ]
-  })
-}
-
-resource "aws_iam_instance_profile" "ec2_ssm_reader" {
-  name = "ansible-demo-ec2-ssm-reader-profile"
-  role = aws_iam_role.ec2_ssm_reader.name
-
-  tags = merge(local.common_tags, { Name = "ansible-demo-ec2-ssm-reader-profile" })
-}
-
 resource "aws_vpc" "ansible_demo" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
@@ -144,7 +99,6 @@ resource "aws_instance" "vm" {
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.public.id
   key_name               = var.key_name
-  iam_instance_profile   = aws_iam_instance_profile.ec2_ssm_reader.name
   vpc_security_group_ids = [aws_security_group.ansible_demo.id]
 
   associate_public_ip_address = true
