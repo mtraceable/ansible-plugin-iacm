@@ -12,12 +12,13 @@
       }}
 
   tasks:
-    - name: Print AWS credential environment variables from control node
-      ansible.builtin.debug:
-        msg:
-          - "AWS_ACCESS_KEY_ID={{ lookup('ansible.builtin.env', 'AWS_ACCESS_KEY_ID') | default('UNSET', true) }}"
-          - "AWS_SECRET_ACCESS_KEY={{ lookup('ansible.builtin.env', 'AWS_SECRET_ACCESS_KEY') | default('UNSET', true) }}"
-          - "AWS_SESSION_TOKEN={{ lookup('ansible.builtin.env', 'AWS_SESSION_TOKEN') | default('UNSET', true) }}"
+    - name: Check AWS identity from control node
+      ansible.builtin.command: aws sts get-caller-identity --output json
+      delegate_to: localhost
+      run_once: true
+      register: aws_identity_cmd
+      changed_when: false
+      failed_when: false
 
     - name: Refresh apt cache on Debian/Ubuntu
       ansible.builtin.apt:
@@ -42,14 +43,23 @@
       register: java_version_cmd
       changed_when: false
 
-    - name: Fetch SSM parameter named test
-      ansible.builtin.command: aws ssm get-parameters --names test
+    - name: Fetch SSM parameter named test from control node
+      ansible.builtin.command: aws ssm get-parameter --name test --output json
+      delegate_to: localhost
+      run_once: true
       register: ssm_parameter_cmd
       changed_when: false
+      when: aws_identity_cmd.rc == 0
+
+    - name: Skip SSM read when AWS credentials are unavailable
+      ansible.builtin.debug:
+        msg: "Skipping SSM fetch because AWS credentials are not configured in the Ansible runtime."
+      when: aws_identity_cmd.rc != 0
 
     - name: Show SSM parameter command output
       ansible.builtin.debug:
         var: ssm_parameter_cmd.stdout
+      when: aws_identity_cmd.rc == 0
 
     - name: Show Java version output
       ansible.builtin.debug:
