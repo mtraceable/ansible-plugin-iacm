@@ -1,0 +1,40 @@
+---
+- name: Install latest Java on target VMs
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    redhat_java_package: >-
+      {{
+        "java-17-amazon-corretto"
+        if ansible_facts["distribution"] == "Amazon"
+        else "java-17-openjdk"
+      }}
+
+  tasks:
+    - name: Refresh apt cache on Debian/Ubuntu
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      when: ansible_facts["os_family"] == "Debian"
+
+    - name: Install latest JDK package on Debian/Ubuntu
+      ansible.builtin.apt:
+        name: default-jdk
+        state: latest
+      when: ansible_facts["os_family"] == "Debian"
+
+    - name: Install latest Java package on RHEL-family systems
+      ansible.builtin.package:
+        name: "{{ redhat_java_package }}"
+        state: latest
+      when: ansible_facts["os_family"] == "RedHat"
+
+    - name: Verify Java is installed
+      ansible.builtin.command: java -version
+      register: java_version_cmd
+      changed_when: false
+
+    - name: Show Java version output
+      ansible.builtin.debug:
+        var: java_version_cmd.stderr_lines

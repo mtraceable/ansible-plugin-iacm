@@ -1,0 +1,3 @@
+[java_targets]
+vm1 ansible_host=18.117.230.10 ansible_user=ec2-user ansible_ssh_private_key_file=/path/to/key.pem
+vm2 ansible_host=3.138.124.116 ansible_user=ec2-user ansible_ssh_private_key_file=/path/to/key.pem
