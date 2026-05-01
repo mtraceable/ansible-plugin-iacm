@@ -41,6 +41,13 @@ pipeline:
                   inventories:
                     - iacmansibletestinventory
                   timeout: 1h
+              - step:
+                  type: Plugin
+                  name: Plugin_1
+                  identifier: Plugin_1
+                  spec:
+                    connectorRef: account.dockerconnector
+                    image: plugins/aws-oidc
           playbooks:
             - iacmansibletestplaybook
           inventories:
