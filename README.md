@@ -50,6 +50,8 @@ SSH authentication notes:
 - Use Terraform workspace outputs for a dynamic inventory in IaCM Inventories.
 - In a pipeline, add `IACMAnsiblePlugin` with `command: run`, then select your playbook and inventory.
 - Ensure the delegate network can reach targets via SSH.
+- VMs are created with an IAM instance profile that allows `ssm:GetParameter` / `ssm:GetParameters` for `ssm_parameter_name`.
+- Set `SSM_PARAMETER_NAME` in the pipeline environment if you want a parameter name other than `test`.
 
 ## Documentation
 

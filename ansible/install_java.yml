@@ -10,16 +10,14 @@
         if ansible_facts["distribution"] == "Amazon"
         else "java-17-openjdk"
       }}
+    ssm_parameter_name: "{{ lookup('ansible.builtin.env', 'SSM_PARAMETER_NAME') | default('test', true) }}"
 
   tasks:
-    - name: Check AWS identity from control node
-      ansible.builtin.shell: aws sts get-caller-identity --output json 2>/dev/null || true
-      delegate_to: localhost
-      run_once: true
+    - name: Check AWS identity from target host
+      ansible.builtin.command: aws sts get-caller-identity --output json
       register: aws_identity_cmd
       changed_when: false
-      args:
-        executable: /bin/bash
+      failed_when: aws_identity_cmd.rc != 0
 
     - name: Refresh apt cache on Debian/Ubuntu
       ansible.builtin.apt:
@@ -44,23 +42,15 @@
       register: java_version_cmd
       changed_when: false
 
-    - name: Fetch SSM parameter named test from control node
-      ansible.builtin.command: aws ssm get-parameter --name test --output json
-      delegate_to: localhost
-      run_once: true
+    - name: Fetch SSM parameter from target host
+      ansible.builtin.command: aws ssm get-parameter --name "{{ ssm_parameter_name }}" --with-decryption --output json
       register: ssm_parameter_cmd
       changed_when: false
-      when: aws_identity_cmd.stdout | length > 0
-
-    - name: Skip SSM read when AWS credentials are unavailable
-      ansible.builtin.debug:
-        msg: "Skipping SSM fetch because AWS credentials are not configured in the Ansible runtime."
-      when: aws_identity_cmd.stdout | length == 0
+      failed_when: ssm_parameter_cmd.rc != 0
 
     - name: Show SSM parameter command output
       ansible.builtin.debug:
         var: ssm_parameter_cmd.stdout
-      when: aws_identity_cmd.stdout | length > 0
 
     - name: Show Java version output
       ansible.builtin.debug:

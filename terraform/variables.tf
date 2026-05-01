@@ -44,6 +44,12 @@ variable "ssh_user" {
   default     = "ec2-user"
 }
 
+variable "ssm_parameter_name" {
+  description = "SSM parameter name the demo playbook reads."
+  type        = string
+  default     = "test"
+}
+
 variable "vpc_cidr" {
   description = "CIDR block for the demo VPC."
   type        = string
