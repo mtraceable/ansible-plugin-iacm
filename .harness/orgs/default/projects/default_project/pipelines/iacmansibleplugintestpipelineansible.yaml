@@ -6,8 +6,8 @@ pipeline:
   tags: {}
   stages:
     - stage:
-        name: Provision using Ansible
-        identifier: Provision_using_Ansible
+        name: Configure using Ansible
+        identifier: Configure_using_Ansible
         description: ""
         type: IACM
         spec:
@@ -34,27 +34,6 @@ pipeline:
             - iacmansibletestinventory
           execution:
             steps:
-              - step:
-                  type: IACMOpenTofuPlugin
-                  name: init
-                  identifier: init
-                  timeout: 10m
-                  spec:
-                    command: init
-              - step:
-                  type: IACMOpenTofuPlugin
-                  name: plan
-                  identifier: plan
-                  timeout: 10m
-                  spec:
-                    command: plan
-              - step:
-                  type: IACMOpenTofuPlugin
-                  name: apply
-                  identifier: apply
-                  timeout: 10m
-                  spec:
-                    command: apply
               - step:
                   type: IACMAnsiblePlugin
                   name: IACMAnsiblePlugin_1
