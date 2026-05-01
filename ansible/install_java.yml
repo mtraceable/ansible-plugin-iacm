@@ -16,6 +16,7 @@
     - name: Check AWS identity from target host
       ansible.builtin.command: aws sts get-caller-identity --output json
       register: aws_identity_cmd
+      elegate_to: localhost
       changed_when: false
       failed_when: aws_identity_cmd.rc != 0
 
@@ -45,13 +46,16 @@
     - name: Fetch SSM parameter from target host
       ansible.builtin.command: aws ssm get-parameter --name "{{ ssm_parameter_name }}" --with-decryption --output json
       register: ssm_parameter_cmd
+      delegate_to: localhost
       changed_when: false
       failed_when: ssm_parameter_cmd.rc != 0
 
     - name: Show SSM parameter command output
+      delegate_to: localhost
       ansible.builtin.debug:
         var: ssm_parameter_cmd.stdout
 
     - name: Show Java version output
+      delegate_to: localhost
       ansible.builtin.debug:
         var: java_version_cmd.stderr_lines
