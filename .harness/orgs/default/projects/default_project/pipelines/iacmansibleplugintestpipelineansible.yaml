@@ -1,0 +1,65 @@
+pipeline:
+  name: iacm-ansible-plugin-test-pipeline-ansible
+  identifier: iacmansibleplugintestpipelineansible
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Provision using Ansible
+        identifier: Provision_using_Ansible
+        description: ""
+        type: IACM
+        spec:
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.kubernetes
+              namespace: harness-delegate-ng
+              volumes: []
+              serviceAccountName: kubernetes-delegate
+              annotations: {}
+              labels: {}
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              containerSecurityContext:
+                capabilities:
+                  drop: []
+                  add: []
+              os: Linux
+              hostNames: []
+          playbooks:
+            - iacmansibletestplaybook
+          inventories:
+            - iacmansibletestinventory
+          execution:
+            steps:
+              - step:
+                  type: IACMOpenTofuPlugin
+                  name: init
+                  identifier: init
+                  timeout: 10m
+                  spec:
+                    command: init
+              - step:
+                  type: IACMOpenTofuPlugin
+                  name: plan
+                  identifier: plan
+                  timeout: 10m
+                  spec:
+                    command: plan
+              - step:
+                  type: IACMOpenTofuPlugin
+                  name: apply
+                  identifier: apply
+                  timeout: 10m
+                  spec:
+                    command: apply
+              - step:
+                  type: IACMAnsiblePlugin
+                  name: IACMAnsiblePlugin_1
+                  identifier: IACMAnsiblePlugin_1
+                  spec:
+                    command: run
+                  timeout: 1h
+        tags: {}
