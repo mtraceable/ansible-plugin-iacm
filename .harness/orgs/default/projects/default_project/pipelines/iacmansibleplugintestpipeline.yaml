@@ -41,6 +41,7 @@ pipeline:
               connectorRef: account.kubernetes
               namespace: test-space
               volumes: []
+              serviceAccountName: kubernetes-delegate
               annotations: {}
               labels: {}
               automountServiceAccountToken: true
