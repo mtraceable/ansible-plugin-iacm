@@ -15,8 +15,9 @@ pipeline:
             type: KubernetesDirect
             spec:
               connectorRef: account.kubernetes
-              namespace: test-space
+              namespace: harness-delegate-ng
               volumes: []
+              serviceAccountName: kubernetes-delegate
               annotations: {}
               labels: {}
               automountServiceAccountToken: true
