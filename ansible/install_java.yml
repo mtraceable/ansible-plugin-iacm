@@ -35,6 +35,15 @@
       register: java_version_cmd
       changed_when: false
 
+    - name: Fetch SSM parameter named test
+      ansible.builtin.command: aws ssm get-parameters --names test
+      register: ssm_parameter_cmd
+      changed_when: false
+
+    - name: Show SSM parameter command output
+      ansible.builtin.debug:
+        var: ssm_parameter_cmd.stdout
+
     - name: Show Java version output
       ansible.builtin.debug:
         var: java_version_cmd.stderr_lines
