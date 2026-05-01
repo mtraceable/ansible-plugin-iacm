@@ -56,6 +56,15 @@ pipeline:
                   inventories:
                     - iacmansibletestinventory
                   timeout: 1h
+              - step:
+                  type: Run
+                  name: Run_1
+                  identifier: Run_1
+                  spec:
+                    connectorRef: account.dockerconnector
+                    image: nginx:latest
+                    shell: Bash
+                    command: sleep 100000000
           playbooks:
             - iacmansibletestplaybook
           inventories:
