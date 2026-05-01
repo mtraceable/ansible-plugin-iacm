@@ -55,6 +55,7 @@ pipeline:
             - iacmansibletestplaybook
           inventories:
             - iacmansibletestinventory
+          workspace: ansiblepluginiacmtest
         tags: {}
   delegateSelectors:
     - kubernetes-delegate
