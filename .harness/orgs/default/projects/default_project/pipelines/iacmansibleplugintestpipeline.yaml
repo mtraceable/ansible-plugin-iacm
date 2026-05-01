@@ -42,3 +42,5 @@ pipeline:
                   spec:
                     command: apply
         tags: {}
+  delegateSelectors:
+    - kubernetes-delegate
