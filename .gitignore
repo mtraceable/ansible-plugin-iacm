@@ -1,6 +1,8 @@
 inventory.ini
 .terraform*
 *.out
-*.sh
 terraform.tfstate*
 *.tfvars
+setup.sh
+teardown.sh
+.DS_Store
