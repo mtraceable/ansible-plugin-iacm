@@ -40,5 +40,9 @@ pipeline:
                   identifier: IACMAnsiblePlugin_1
                   spec:
                     command: run
+                  playbooks:
+                    - iacmansibletestplaybook
+                  inventories:
+                    - iacmansibletestinventory
                   timeout: 1h
         tags: {}
