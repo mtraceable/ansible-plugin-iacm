@@ -11,12 +11,6 @@ pipeline:
         description: ""
         type: IACM
         spec:
-          platform:
-            os: Linux
-            arch: Amd64
-          runtime:
-            type: Cloud
-            spec: {}
           workspace: ansiblepluginiacmtest
           execution:
             steps:
@@ -41,6 +35,22 @@ pipeline:
                   timeout: 10m
                   spec:
                     command: apply
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.kubernetes
+              namespace: test-space
+              volumes: []
+              annotations: {}
+              labels: {}
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              containerSecurityContext:
+                capabilities:
+                  drop: []
+                  add: []
+              os: Linux
+              hostNames: []
         tags: {}
   delegateSelectors:
     - kubernetes-delegate
