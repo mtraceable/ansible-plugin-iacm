@@ -31,15 +31,6 @@ pipeline:
           execution:
             steps:
               - step:
-                  type: Run
-                  name: Run_1
-                  identifier: Run_1
-                  spec:
-                    connectorRef: account.dockerconnector
-                    image: nginx:latest
-                    shell: Bash
-                    command: sleep 10000000
-              - step:
                   type: IACMAnsiblePlugin
                   name: IACMAnsiblePlugin_1
                   identifier: IACMAnsiblePlugin_1
