@@ -40,6 +40,10 @@ pipeline:
                   identifier: IACMAnsiblePlugin_1
                   spec:
                     command: run
+                  playbooks:
+                    - iacmansibletestplaybook
+                  inventories:
+                    - iacmansibletestinventorystatic
                   timeout: 1h
           infrastructure:
             type: KubernetesDirect
