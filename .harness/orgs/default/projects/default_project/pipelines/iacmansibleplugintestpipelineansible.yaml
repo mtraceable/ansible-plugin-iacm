@@ -31,6 +31,17 @@ pipeline:
           execution:
             steps:
               - step:
+                  type: Plugin
+                  name: Plugin_1
+                  identifier: Plugin_1
+                  spec:
+                    connectorRef: account.dockerconnector
+                    image: plugins/aws-oidc
+                    settings:
+                      iamRoleArn: arn:aws:iam::282764120287:role/harness-oidc-role
+                      role_session_name: foo
+                      duration: 3600
+              - step:
                   type: IACMAnsiblePlugin
                   name: IACMAnsiblePlugin_1
                   identifier: IACMAnsiblePlugin_1
@@ -39,10 +50,10 @@ pipeline:
                   playbooks:
                     - iacmansibletestplaybook
                   inventories:
-                    - iacmansibletestinventorystatic
+                    - iacmansibletestinventory
                   timeout: 1h
           playbooks:
             - iacmansibletestplaybook
           inventories:
-            - iacmansibletestinventorystatic
+            - iacmansibletestinventory
         tags: {}

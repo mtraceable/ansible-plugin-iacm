@@ -53,5 +53,3 @@ pipeline:
               hostNames: []
           workspace: ansiblepluginiacmtest
         tags: {}
-  delegateSelectors:
-    - kubernetes-delegate
