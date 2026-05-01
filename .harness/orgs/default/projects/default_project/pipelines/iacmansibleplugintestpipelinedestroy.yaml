@@ -1,0 +1,54 @@
+pipeline:
+  name: iacm-ansible-plugin-test-pipeline-destroy
+  identifier: iacmansibleplugintestpipelinedestroy
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Destroy Infrastructure
+        identifier: Destroy_Infrastructure
+        description: ""
+        type: IACM
+        spec:
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.kubernetes
+              namespace: test-space
+              volumes: []
+              annotations: {}
+              labels: {}
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              containerSecurityContext:
+                capabilities:
+                  drop: []
+                  add: []
+              os: Linux
+              hostNames: []
+          workspace: ansiblepluginiacmtest
+          execution:
+            steps:
+              - step:
+                  type: IACMOpenTofuPlugin
+                  name: init
+                  identifier: init
+                  timeout: 10m
+                  spec:
+                    command: init
+              - step:
+                  type: IACMOpenTofuPlugin
+                  name: planDestroy
+                  identifier: planDestroy
+                  timeout: 10m
+                  spec:
+                    command: plan-destroy
+              - step:
+                  type: IACMOpenTofuPlugin
+                  name: destroy
+                  identifier: destroy
+                  timeout: 10m
+                  spec:
+                    command: destroy
+        tags: {}
