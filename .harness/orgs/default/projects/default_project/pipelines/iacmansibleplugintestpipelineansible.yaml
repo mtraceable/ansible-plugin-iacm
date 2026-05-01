@@ -74,7 +74,7 @@ pipeline:
                       echo $AWS_SECRET_ACCESS_KEY
                       echo $AWS_SESSION_TOKEN
 
-                      echo "<+steps.Plugin_1.output.outputVariables.AWS_ACCESS_KEY_ID>"
+                      echo "<+steps.Plugin_1.output.outputVariables.AWS_ACCESS_KEY_ID>" > /harness/proof.txt
                       echo "<+steps.Plugin_1.output.outputVariables.AWS_SECRET_ACCESS_KEY>"
                       echo "<+steps.Plugin_1.output.outputVariables.AWS_SESSION_TOKEN>"
 
