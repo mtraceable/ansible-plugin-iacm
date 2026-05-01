@@ -64,7 +64,13 @@ pipeline:
                     connectorRef: account.dockerconnector
                     image: amazon/aws-cli:latest
                     shell: Bash
-                    command: sleep 100000000
+                    command: |-
+                      echo $AWS_ACCESS_KEY_ID
+                      echo $AWS_ROLE_ARN
+                      echo $AWS_SECRET_ACCESS_KEY
+                      echo $AWS_SESSION_TOKEN
+
+                      sleep 100000000
                     envVariables:
                       AWS_ACCESS_KEY_ID: <+steps.Plugin_1.output.outputVariables.AWS_ACCESS_KEY_ID>
                       AWS_SECRET_ACCESS_KEY: <+steps.Plugin_1.output.outputVariables.AWS_SECRET_ACCESS_KEY>
