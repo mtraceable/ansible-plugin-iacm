@@ -48,6 +48,8 @@ pipeline:
                   spec:
                     connectorRef: account.dockerconnector
                     image: plugins/aws-oidc
+                    settings:
+                      iamRoleArn: arn:aws:iam::282764120287:role/harness-oidc-role
           playbooks:
             - iacmansibletestplaybook
           inventories:
