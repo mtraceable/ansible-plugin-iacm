@@ -28,10 +28,6 @@ pipeline:
                   add: []
               os: Linux
               hostNames: []
-          playbooks:
-            - iacmansibletestplaybook
-          inventories:
-            - iacmansibletestinventory
           execution:
             steps:
               - step:
