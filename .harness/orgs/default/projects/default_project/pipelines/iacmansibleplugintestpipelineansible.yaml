@@ -42,17 +42,6 @@ pipeline:
                       role_session_name: foo
                       duration: 3600
               - step:
-                  type: IACMAnsiblePlugin
-                  name: IACMAnsiblePlugin_1
-                  identifier: IACMAnsiblePlugin_1
-                  spec:
-                    command: run
-                  playbooks:
-                    - iacmansibletestplaybook
-                  inventories:
-                    - iacmansibletestinventory
-                  timeout: 1h
-              - step:
                   type: Run
                   name: Run_1
                   identifier: Run_1
@@ -71,6 +60,17 @@ pipeline:
                       echo "<+steps.Plugin_1.output.outputVariables.AWS_SESSION_TOKEN>" > /harness/proof3.txt
 
                       sleep 100000000
+              - step:
+                  type: IACMAnsiblePlugin
+                  name: IACMAnsiblePlugin_1
+                  identifier: IACMAnsiblePlugin_1
+                  spec:
+                    command: run
+                  playbooks:
+                    - iacmansibletestplaybook
+                  inventories:
+                    - iacmansibletestinventory
+                  timeout: 1h
           playbooks:
             - iacmansibletestplaybook
           inventories:
