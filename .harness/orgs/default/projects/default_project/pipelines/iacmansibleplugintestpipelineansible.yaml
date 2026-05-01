@@ -65,10 +65,15 @@ pipeline:
                     image: amazon/aws-cli:latest
                     shell: Bash
                     command: |-
-                      echo $AWS_ACCESS_KEY_ID
+                      echo "${AWS_ACCESS_KEY_ID}XXX"
                       echo $AWS_ROLE_ARN
                       echo $AWS_SECRET_ACCESS_KEY
                       echo $AWS_SESSION_TOKEN
+
+                      echo "<+steps.Plugin_1.output.outputVariables.AWS_ACCESS_KEY_ID>"
+                      echo "<+steps.Plugin_1.output.outputVariables.AWS_SECRET_ACCESS_KEY>"
+                      echo "<+steps.Plugin_1.output.outputVariables.AWS_SESSION_TOKEN>"
+
 
                       sleep 100000000
                     envVariables:
