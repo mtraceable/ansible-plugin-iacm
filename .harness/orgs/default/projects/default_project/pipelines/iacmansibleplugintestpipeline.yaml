@@ -34,6 +34,13 @@ pipeline:
                   timeout: 10m
                   spec:
                     command: apply
+              - step:
+                  type: IACMAnsiblePlugin
+                  name: IACMAnsiblePlugin_1
+                  identifier: IACMAnsiblePlugin_1
+                  spec:
+                    command: run
+                  timeout: 1h
           infrastructure:
             type: KubernetesDirect
             spec:
