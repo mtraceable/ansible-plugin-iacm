@@ -1,5 +1,5 @@
 pipeline:
-  name: iacm-ansible-plugin-test-pipeline
+  name: iacm-ansible-plugin-test-pipeline-provision
   identifier: iacmansibleplugintestpipeline
   projectIdentifier: default_project
   orgIdentifier: default
