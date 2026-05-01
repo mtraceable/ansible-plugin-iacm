@@ -61,10 +61,6 @@ pipeline:
                     image: amazon/aws-cli:latest
                     shell: Bash
                     command: |-
-                      export AWS_ACCESS_KEY_ID="<+steps.Plugin_1.output.outputVariables.AWS_ACCESS_KEY_ID>"
-                      export AWS_SECRET_ACCESS_KEY="<+steps.Plugin_1.output.outputVariables.AWS_SECRET_ACCESS_KEY>"
-                      export AWS_SESSION_TOKEN="<+steps.Plugin_1.output.outputVariables.AWS_SESSION_TOKEN>"
-
                       echo "${AWS_ACCESS_KEY_ID}XXX"
                       echo $AWS_ROLE_ARN
                       echo $AWS_SECRET_ACCESS_KEY
@@ -74,13 +70,7 @@ pipeline:
                       echo "<+steps.Plugin_1.output.outputVariables.AWS_SECRET_ACCESS_KEY>"
                       echo "<+steps.Plugin_1.output.outputVariables.AWS_SESSION_TOKEN>"
 
-
                       sleep 100000000
-                    envVariables:
-                      AWS_ACCESS_KEY_ID: <+steps.Plugin_1.output.outputVariables.AWS_ACCESS_KEY_ID>
-                      AWS_SECRET_ACCESS_KEY: <+steps.Plugin_1.output.outputVariables.AWS_SECRET_ACCESS_KEY>
-                      AWS_SESSION_TOKEN: <+steps.Plugin_1.output.outputVariables.AWS_SESSION_TOKEN>
-                      SUPPORT_DEBUG: "true"
           playbooks:
             - iacmansibletestplaybook
           inventories:
