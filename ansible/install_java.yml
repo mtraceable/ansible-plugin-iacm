@@ -12,6 +12,13 @@
       }}
 
   tasks:
+    - name: Print AWS credential environment variables from control node
+      ansible.builtin.debug:
+        msg:
+          - "AWS_ACCESS_KEY_ID={{ lookup('ansible.builtin.env', 'AWS_ACCESS_KEY_ID') | default('UNSET', true) }}"
+          - "AWS_SECRET_ACCESS_KEY={{ lookup('ansible.builtin.env', 'AWS_SECRET_ACCESS_KEY') | default('UNSET', true) }}"
+          - "AWS_SESSION_TOKEN={{ lookup('ansible.builtin.env', 'AWS_SESSION_TOKEN') | default('UNSET', true) }}"
+
     - name: Refresh apt cache on Debian/Ubuntu
       ansible.builtin.apt:
         update_cache: true
@@ -43,13 +50,6 @@
     - name: Show SSM parameter command output
       ansible.builtin.debug:
         var: ssm_parameter_cmd.stdout
-
-    - name: Print AWS credential environment variables from control node
-      ansible.builtin.debug:
-        msg:
-          - "AWS_ACCESS_KEY_ID={{ lookup('ansible.builtin.env', 'AWS_ACCESS_KEY_ID') | default('UNSET', true) }}"
-          - "AWS_SECRET_ACCESS_KEY={{ lookup('ansible.builtin.env', 'AWS_SECRET_ACCESS_KEY') | default('UNSET', true) }}"
-          - "AWS_SESSION_TOKEN={{ lookup('ansible.builtin.env', 'AWS_SESSION_TOKEN') | default('UNSET', true) }}"
 
     - name: Show Java version output
       ansible.builtin.debug:
