@@ -47,6 +47,8 @@ pipeline:
                   identifier: IACMAnsiblePlugin_1
                   spec:
                     command: run
+                    image: pkg.harness.io/n5dbefl9s4-ibnocsk8gbg/abc/harness-ansible-with-awscli@sha256:6ff48c46c964169ee7a30d625e863e8e0a0ca4ad3e80bd43735ea8b5b5be4d6d
+                    connectorRef: account.harnessdockerregistry
                   playbooks:
                     - iacmansibletestplaybook
                   inventories:
